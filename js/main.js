@@ -1,3 +1,7 @@
+var input = document.querySelectorAll('input');
+for(i=0; i<input.length; i++){
+    input[i].setAttribute('size',input[i].getAttribute('placeholder').length);
+}
 const { createApp } = Vue
 
 createApp({
@@ -5,12 +9,14 @@ createApp({
         return {
             newTask:{
                 text:"",
-                done:false
+                done:false,
+                important: false
             },
             taskList: [
-                {text :"lavare l'auto", done: false},
-                {text :"pagare il bollo", done: true},
-                {text :"fare gli esercizi", done: false}
+                {text :"lavare l'auto", done: false, important : false},
+                {text :"pagare il bollo", done: true, important : false},
+                {text :"fare gli esercizi", done: false, important : false},
+                {text :"imparare ad assegnare calssi con oggetti!", done: true, important : true}
             ],
             inputError : false
         }
@@ -24,6 +30,9 @@ createApp({
                 //     done :false
                 // }) se metti un ogetto da un'altra parte restano comunque collegati quindi devi creare una copia e pushare quella.
                 let x = {...this.newTask}
+                if (x.text.includes("!")) {
+                    x.important= true
+                }
                 this.taskList.unshift(x)
                 this.newTask.text=""
             } else {
